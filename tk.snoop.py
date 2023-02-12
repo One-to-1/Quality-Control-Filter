@@ -1,12 +1,10 @@
 import cv2
 import numpy as np
-import tkinter as tk
-from tkinter import filedialog
-from tkinter import messagebox
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 import joblib
-
+import tkinter as tk
+from tkinter import messagebox
 # Load and pre-process image data
 def load_data():
     # Load images and labels
@@ -29,26 +27,25 @@ def extract_features(images):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         features.append(gray.ravel())
     return features
-
 def show_image(image):
     cv2.namedWindow("Input Image", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("Input Image", 360, 640)
     cv2.imshow("Input Image", image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-
 # Predict if input image is defective or not
-def predict(clf, img_path):
+def predict(clf):
+    img_path = input("Enter the path of the image: ")
     image = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     feature = gray.ravel()
     prediction = clf.predict([feature])
     if prediction[0] == 1:
-        return "The object is good."
+        print("The object is good.")
     else:
-        return "The object is defective."
-
-# Train and Save the model
+        print("The object is defective.")
+    show_image(image)
+# Train Model
 def train():
     images, labels = load_data()
     features = extract_features(images)
@@ -58,49 +55,35 @@ def train():
     accuracy = clf.score(X_test, y_test)
     print("Accuracy: ", accuracy)
     return clf
-
-class Application(tk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
-        self.pack()
-        self.create_widgets()
-
-    def create_widgets(self):
-        self.model_label = tk.Label(self, text="Model: ")
-        self.model_label.pack(side="top")
-
-        self.model_entry = tk.Entry(self)
-        self.model_entry.pack(side="top")
-
-        self.image_label = tk.Label(self, text="Image: ")
-        self.image_label.pack(side="top")
-
-        self.image_entry = tk.Entry(self)
-        self.image_entry.pack(side="top")
-
-        self.predict_button = tk.Button(self)
-        self.predict_button["text"] = "Predict"
-        self.predict_button["command"] = self.predict
-        self.predict_button.pack(side="top")
-
-        self.quit = tk.Button(self, text="QUIT", fg="red", command=self.master.destroy)
-        self.quit.pack(side="bottom")
-
-    def predict(self):
-        model_name = self.model_entry.get()
-        image_path = self.image_entry.get()
-        clf = joblib.load("saved_models/" + model_name + ".pkl")
-        image = cv2.imread(image_path)
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        feature = gray.ravel()
-        prediction = clf.predict([feature])
-        if prediction[0] == 1:
-            tk.messagebox.showinfo("Result", "The object is good.")
-        else:
-            tk.messagebox.showinfo("Result", "The object is defective.")
-        show_image(image)
-
+# Save model
+def save_model(clf):
+    print("Waring: This may overwrite an existing model!! Make Sure to enter a unique name.")
+    name = input("Enter the name of the model: ")
+    joblib.dump(clf, "saved_models/" + name + ".pkl")
+    print("Model saved successfully as " + name + ".pkl")
+    return clf
+# Frontend
 root = tk.Tk()
-app = Application(master=root)
-app.mainloop()
+root.title("Snoop - Quality Control System")
+root.geometry("500x500")
+
+welcome = tk.Label(root, text="Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?")
+welcome.pack()
+
+train_button = tk.Button(root, text="Train a new model", command=train)
+train_button.pack()
+# print("Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?\n")
+# sel = menu_opt()
+# while sel != 0:
+#     if sel == 1:
+#         print("Training model...\n")
+#         clf = train()
+#         predict(clf)
+#         print("Training complete.\n")
+#         sel = menu_opt()
+#     if sel == 2:
+#         name = input("Enter the name of the model: ")
+#         clf = joblib.load("saved_models/" + name + ".pkl")
+#         predict(clf)
+#         sel = menu_opt()
+root.mainloop()
