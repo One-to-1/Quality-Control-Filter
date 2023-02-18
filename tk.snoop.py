@@ -62,6 +62,11 @@ def save_model(clf):
     joblib.dump(clf, "saved_models/" + name + ".pkl")
     print("Model saved successfully as " + name + ".pkl")
     return clf
+# load model
+def load_model():
+    name = input("Enter the name of the model: ")
+    clf = joblib.load("saved_models/" + name + ".pkl")
+    return clf
 # Frontend
 root = tk.Tk()
 root.title("Snoop - Quality Control System")
@@ -72,18 +77,8 @@ welcome.pack()
 
 train_button = tk.Button(root, text="Train a new model", command=train)
 train_button.pack()
-# print("Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?\n")
-# sel = menu_opt()
-# while sel != 0:
-#     if sel == 1:
-#         print("Training model...\n")
-#         clf = train()
-#         predict(clf)
-#         print("Training complete.\n")
-#         sel = menu_opt()
-#     if sel == 2:
-#         name = input("Enter the name of the model: ")
-#         clf = joblib.load("saved_models/" + name + ".pkl")
-#         predict(clf)
-#         sel = menu_opt()
+
+load_button = tk.Button(root, text="Load a model", command=load_model)
+load_button.pack()
+
 root.mainloop()
