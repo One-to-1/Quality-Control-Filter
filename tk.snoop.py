@@ -40,18 +40,42 @@ def show_image(image):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 # Predict if input image is defective or not
+# def predict():
+#     global clf
+#     img_path = filedialog.askopenfilename(initialdir = "/", title = "Select file", filetypes = (("JPG files", "*.jpg"), ("all files", "*.*")))
+#     image = cv2.imread(img_path)
+#     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+#     feature = gray.ravel()
+#     prediction = clf.predict([feature])
+#     if prediction[0] == 1:
+#         good_label.pack()
+#     else:
+#         bad_label.pack()
+#     show_image(image)
+
+# Live image prediction
 def predict():
     global clf
-    img_path = filedialog.askopenfilename(initialdir = "/", title = "Select file", filetypes = (("JPG files", "*.jpg"), ("all files", "*.*")))
-    image = cv2.imread(img_path)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    feature = gray.ravel()
-    prediction = clf.predict([feature])
-    if prediction[0] == 1:
-        good_label.pack()
-    else:
-        bad_label.pack()
-    show_image(image)
+    cap = cv2.VideoCapture(0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        feature = gray.ravel()
+        prediction = clf.predict([feature])
+        if prediction[0] == 1:
+            cv2.putText(frame, "Good", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        else:
+            cv2.putText(frame, "Defective", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            # Highlight the defective part (replace this with your own logic)
+            cv2.rectangle(frame, (100, 100), (200, 200), (0, 0, 255), 2)
+        cv2.imshow("Output Image", frame)
+        key = cv2.waitKey(1)
+        if key == ord("q"):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 # Train Model
 def train():
     global accrcy
