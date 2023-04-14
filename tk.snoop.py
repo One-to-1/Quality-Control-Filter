@@ -16,12 +16,12 @@ def load_data():
     # Load images and labels
     images = []
     labels = []
-    for i in range(1, 25):
-        image = cv2.imread("obj_img/obj(" + str(i) + ").jpg")
+    for i in range(0, 97):
+        image = cv2.imread("obj_img/img_" + str(i) + ".jpg")
         images.append(image)
         labels.append(1)
-    for i in range(1, 11):
-        image = cv2.imread("obj_def_img/def_obj(" + str(i) + ").jpg")
+    for i in range(0, 99):
+        image = cv2.imread("obj_def_img/img_" + str(i) + ".jpg")
         images.append(image)
         labels.append(0)
     return images, labels
@@ -56,7 +56,7 @@ def show_image(image):
 # Live image prediction
 def predict():
     global clf
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     while True:
         ret, frame = cap.read()
         if not ret:
