@@ -48,15 +48,16 @@ def show_image(image):
 #     feature = gray.ravel()
 #     prediction = clf.predict([feature])
 #     if prediction[0] == 1:
-#         good_label.pack()
+#         good_label.pack(pady=10)
 #     else:
-#         bad_label.pack()
+#         bad_label.pack(pady=10)
 #     show_image(image)
 
 # Live image prediction
 def predict():
     global clf
     cap = cv2.VideoCapture(1)
+    cap.set(cv2.CAP_PROP_EXPOSURE, -5)
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -69,7 +70,7 @@ def predict():
         else:
             cv2.putText(frame, "Defective", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
             # Highlight the defective part (replace this with your own logic)
-            cv2.rectangle(frame, (100, 100), (200, 200), (0, 0, 255), 2)
+            # cv2.rectangle(frame, (100, 100), (200, 200), (0, 0, 255), 2)
         cv2.imshow("Output Image", frame)
         key = cv2.waitKey(1)
         if key == ord("q"):
@@ -89,13 +90,13 @@ def train():
     messagebox.showinfo("Accuracy", "The accuracy of the model is: " + str(accrcy))
     welcome.pack_forget()
     load_button.pack_forget()
-    save_model_button.pack()
+    save_model_button.pack(pady=10)
     
 # Enter Model name for save file
 def enter_model_name_save():
-    warning_save_model.pack()
-    model_name_save.pack()
-    save_model_button2.pack()
+    warning_save_model.pack(pady=10)
+    model_name_save.pack(pady=10)
+    save_model_button2.pack(pady=10)
 # Save model
 def save_model(name):
     global clf
@@ -106,25 +107,25 @@ def save_model(name):
     warning_save_model.pack_forget()
     model_name_save.pack_forget()
     save_model_button2.pack_forget()
-    tk.Label(root, text="Model saved successfully!!").pack()
-    Exit_button.pack()
+    tk.Label(root, text="Model saved successfully!!").pack(pady=10)
+    Exit_button.pack(pady=10)
 # Enter Model name
 def enter_model_name():
     global model_name
     train_button.pack_forget()
     welcome.pack_forget()
     load_button.pack_forget()
-    Enter_name_model.pack()
+    Enter_name_model.pack(pady=10)
     model_name = tk.Entry(root)
-    model_name.pack()
-    load_button_2.pack()
+    model_name.pack(pady=10)
+    load_button_2.pack(pady=10)
 # load model
 def load_model(model_name):
     global clf
     clf = joblib.load("saved_models/" + model_name + ".pkl")
-    Model_loaded_succ.pack()
+    Model_loaded_succ.pack(pady=10)
     load_button_2.pack_forget()
-    predict_button.pack()
+    predict_button.pack(pady=10)
 
 # Exit
 def exit():
@@ -136,7 +137,7 @@ root.title("Snoop - Quality Control System")
 root.geometry("500x300")
 
 welcome = tk.Label(root, text="Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?")
-welcome.pack()
+welcome.pack(pady=10)
 
 Enter_name_model = tk.Label(root, text = "Enter the name of the model: ")
 
@@ -150,10 +151,10 @@ warning_save_model = tk.Label(root, text="Waring: This may overwrite an existing
 model_name_save = tk.Entry(root)
 
 train_button = tk.Button(root, text="Train a new model", command=train)
-train_button.pack()
+train_button.pack(pady=10)
 
 load_button = tk.Button(root, text="Load a model", command=enter_model_name)
-load_button.pack()
+load_button.pack(pady=10)
 
 load_button_2 = tk.Button(root, text="Load", command=lambda: load_model(model_name.get()))
 
@@ -164,6 +165,6 @@ save_model_button2 = tk.Button(root, text="Save", command=lambda: save_model(mod
 predict_button = tk.Button(root, text="Predict", command=lambda: predict())
 
 Exit_button = tk.Button(root, text="Exit", command=exit)
-Exit_button.pack()
+Exit_button.pack(pady=10)
 
 root.mainloop()

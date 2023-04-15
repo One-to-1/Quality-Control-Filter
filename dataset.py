@@ -19,8 +19,8 @@ def main():
     create_directory(directory)
 
     cap = cv2.VideoCapture(1)
-    cap.set (cv2.CAP_PROP_EXPOSURE, 0.05)
-    count = 50
+    cap.set(cv2.CAP_PROP_EXPOSURE, -5)
+    count = 0
 
     while count < 100:
         ret, frame = cap.read()
