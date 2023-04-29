@@ -71,8 +71,6 @@ def predict():
             cv2.putText(frame, "Good", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         else:
             cv2.putText(frame, "Defective", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-            # Highlight the defective part (replace this with your own logic)
-            # cv2.rectangle(frame, (100, 100), (200, 200), (0, 0, 255), 2)
         cv2.imshow("Output Image", frame)
         key = cv2.waitKey(1)
         if key == ord("q"):
