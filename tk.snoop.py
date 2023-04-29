@@ -34,6 +34,7 @@ def extract_features(images):
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         features.append(gray.ravel())
     return features
+
 def show_image(image):
     cv2.namedWindow("Input Image", cv2.WINDOW_NORMAL)
     cv2.resizeWindow("Input Image", 360, 640)

@@ -1,12 +1,22 @@
 import customtkinter as ctk
 
-def button_callback():
-    print("Button clicked")
+global clf
+clf = 0
 
-app = ctk.CTk()
-app.title("Snoop")
-app.geometry("500x300")
-button = ctk.CTkButton(app, text="my button", command=button_callback)
-button.grid(row=0, column=0, padx=20, pady=20)
+def load_data():
+    i=1
+    l=2
+    return i, l
 
-app.mainloop()
+def extract_features(i):
+    print(i)
+    return 3
+
+def show_image(i)
+    print(i)
+    
+def predict():
+    clf += 1
+    print("predict")
+    
+def train
