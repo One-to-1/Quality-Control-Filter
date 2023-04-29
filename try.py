@@ -1,14 +1,12 @@
-import cv2
+import customtkinter as ctk
 
-cap = cv2.VideoCapture(1)
-cap.set(cv2.CAP_PROP_EXPOSURE, -5)
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        break
-    cv2.imshow("Webcam", frame)
-    key = cv2.waitKey(1) & 0xFF
-    if key == ord("q"):
-        break
-cap.release()
-cv2.destroyAllWindows()
+def button_callback():
+    print("Button clicked")
+
+app = ctk.CTk()
+app.title("Snoop")
+app.geometry("500x300")
+button = ctk.CTkButton(app, text="my button", command=button_callback)
+button.grid(row=0, column=0, padx=20, pady=20)
+
+app.mainloop()

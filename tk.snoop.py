@@ -3,9 +3,10 @@ import numpy as np
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 import joblib
-import tkinter as tk
-from tkinter import messagebox
-from tkinter import filedialog
+import customtkinter as ctk
+# import ctkinter as ctk
+# from customtkinter import messagebox
+# from ctkinter import filedialog
 
 global clf
 global model_name
@@ -87,7 +88,7 @@ def train():
     clf = svm.SVC(kernel='linear', C=1)
     clf.fit(X_train, y_train)
     accrcy = clf.score(X_test, y_test)
-    messagebox.showinfo("Accuracy", "The accuracy of the model is: " + str(accrcy))
+    # messagebox.showinfo("Accuracy", "The accuracy of the model is: " + str(accrcy))
     welcome.pack_forget()
     load_button.pack_forget()
     save_model_button.pack(pady=10)
@@ -107,7 +108,7 @@ def save_model(name):
     warning_save_model.pack_forget()
     model_name_save.pack_forget()
     save_model_button2.pack_forget()
-    tk.Label(root, text="Model saved successfully!!").pack(pady=10)
+    ctk.CTkLabel(root, text="Model saved successfully!!").pack(pady=10)
     Exit_button.pack(pady=10)
 # Enter Model name
 def enter_model_name():
@@ -116,7 +117,7 @@ def enter_model_name():
     welcome.pack_forget()
     load_button.pack_forget()
     Enter_name_model.pack(pady=10)
-    model_name = tk.Entry(root)
+    model_name = ctk.CTkEntry(root)
     model_name.pack(pady=10)
     load_button_2.pack(pady=10)
 # load model
@@ -132,39 +133,39 @@ def exit():
     root.destroy()
 
 # Frontend
-root = tk.Tk()
+root = ctk.CTk()
 root.title("Snoop - Quality Control System")
 root.geometry("500x300")
 
-welcome = tk.Label(root, text="Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?")
+welcome = ctk.CTkLabel(root, text="Hello!\nWelcome to Snoop, Your friendly neighbourhood Quality controll System!!\nWhat Would you Like to Do today?")
 welcome.pack(pady=10)
 
-Enter_name_model = tk.Label(root, text = "Enter the name of the model: ")
+Enter_name_model = ctk.CTkLabel(root, text = "Enter the name of the model: ")
 
-Model_loaded_succ = tk.Label(root, text = "Model loaded successfully!!")
+Model_loaded_succ = ctk.CTkLabel(root, text = "Model loaded successfully!!")
 
-good_label = tk.Label(root, text="The object is good.")
-bad_label = tk.Label(root, text="The object is defective.")
+good_label = ctk.CTkLabel(root, text="The object is good.")
+bad_label = ctk.CTkLabel(root, text="The object is defective.")
 
-warning_save_model = tk.Label(root, text="Waring: This may overwrite an existing model!! Make Sure to enter a unique name.")
+warning_save_model = ctk.CTkLabel(root, text="Waring: This may overwrite an existing model!! Make Sure to enter a unique name.")
 
-model_name_save = tk.Entry(root)
+model_name_save = ctk.CTkEntry(root)
 
-train_button = tk.Button(root, text="Train a new model", command=train)
+train_button = ctk.CTkButton(root, text="Train a new model", command=train)
 train_button.pack(pady=10)
 
-load_button = tk.Button(root, text="Load a model", command=enter_model_name)
+load_button = ctk.CTkButton(root, text="Load a model", command=enter_model_name)
 load_button.pack(pady=10)
 
-load_button_2 = tk.Button(root, text="Load", command=lambda: load_model(model_name.get()))
+load_button_2 = ctk.CTkButton(root, text="Load", command=lambda: load_model(model_name.get()))
 
-save_model_button = tk.Button(root, text="Save Model", command=lambda: enter_model_name_save())
+save_model_button = ctk.CTkButton(root, text="Save Model", command=lambda: enter_model_name_save())
 
-save_model_button2 = tk.Button(root, text="Save", command=lambda: save_model(model_name_save.get()))
+save_model_button2 = ctk.CTkButton(root, text="Save", command=lambda: save_model(model_name_save.get()))
 
-predict_button = tk.Button(root, text="Predict", command=lambda: predict())
+predict_button = ctk.CTkButton(root, text="Predict", command=lambda: predict())
 
-Exit_button = tk.Button(root, text="Exit", command=exit)
+Exit_button = ctk.CTkButton(root, text="Exit", command=exit)
 Exit_button.pack(pady=10)
 
 root.mainloop()
