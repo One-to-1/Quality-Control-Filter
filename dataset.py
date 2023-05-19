@@ -15,7 +15,7 @@ def save_image(image, label, count, directory):
 
 def main():
     label = "img"
-    directory = "./obj_def_img"
+    directory = "./obj_def_img1"
     create_directory(directory)
 
     cap = cv2.VideoCapture(1)

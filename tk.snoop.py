@@ -18,11 +18,11 @@ def load_data():
     images = []
     labels = []
     for i in range(0, 97):
-        image = cv2.imread("obj_img/img_" + str(i) + ".jpg")
+        image = cv2.imread("obj_img1/img_" + str(i) + ".jpg")
         images.append(image)
         labels.append(1)
     for i in range(0, 99):
-        image = cv2.imread("obj_def_img/img_" + str(i) + ".jpg")
+        image = cv2.imread("obj_def_img1/img_" + str(i) + ".jpg")
         images.append(image)
         labels.append(0)
     return images, labels
